@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Films {% endblock %}
+
+{% block body %}
+    <div>Voici la liste des films disponibles : </div>
+
+    <ul>
+        {% for film in films %}
+            <li>{{film}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
