@@ -22,6 +22,12 @@ class Film
     #[ORM\Column(type: 'string', length: 255)]
     private $realisateur;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $date;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +65,30 @@ class Film
     public function setRealisateur(string $realisateur): self
     {
         $this->realisateur = $realisateur;
+
+        return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    public function setDate(string $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

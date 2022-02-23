@@ -1,0 +1,12 @@
+#menu ul{
+    list-style-type: none;
+    color:  #3D3D3D;
+    font-size: 24px;
+
+
+}
+
+#menu a{
+    color: inherit;
+}
+

@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Films {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/listing.js') }}"></script>             
+{% endblock %}
+
+{% block body %}
+    <div class="body_film">
+        <div class="ajouter">
+            <a href={{ path('create') }}> <button type="button" >Ajouter un film</button></a>
+        </div>
+
+        <div>
+            <h2 class="titre_tableau">Gestion des films</h2>
+        </div>
+        <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Réalisateur</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Date de parution</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for film in films %}
+                    <tr>
+                        <th scope="row"> {{ film.id }} </th>
+                        <td> {{ film.title }} </td>
+                        <td> {{ film.realisateur }} </td>
+                        <td> {{ film.genre }} </td>
+                        <td> {{ film.date }} </td>
+                        <td class="details"><a href="{{ path('details', { 'id':film.id } )}}">détails</a></td>
+                        <td class="modifier"><a href="{{ path('update', { 'id':film.id } )}}">modifier</a></td>
+                        <td class="supprimer"><a href="{{ path('delete', { 'id':film.id } )}}">supprimer</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+        
+
+{% endblock %}
