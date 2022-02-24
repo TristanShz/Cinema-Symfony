@@ -11,9 +11,9 @@
 {% block body %}
 
     {% if (isEditor) %}
-        <h1>Edition de film</h1>
+        <h2>Edition de film</h2>
     {% else %}
-        <h1>Ajout de films</h1>
+        <h2>Ajout de films</h2>
     {% endif %}
 
     <div class="form_film">
@@ -27,7 +27,13 @@
 
         {{ form_row(form.date, {'label': 'Date de parution : '})}}
 
-        {{ form_row(form.image, {'label': 'Image : '})}}
+        {{ form_row(form.duree, {'label': 'Durée du film : '})}}
+
+        {{ form_row(form.status, {'label': 'Statut : '})}}
+
+        {{ form_row(form.synopsis, {'label': 'Synopsis : '})}}
+
+        {{ form_row(form.image, {'label': 'Image (optionnel) : '})}}
 
         {% if (isEditor) %}
             {{ form_row(form.save, {'label': 'Editer le film'})}}

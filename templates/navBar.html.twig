@@ -1,7 +1,5 @@
 {% block stylesheets %}
     <link href="{{ asset('css/navBar.css') }}" rel="stylesheet">
-
-    
 {% endblock %}
 
 {% block javascripts %}
@@ -34,13 +32,13 @@
         </li>
 
         <li>
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ path('seance_index') }}">
             
             <span id="icon">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-masks-theater"></i>
             </span>
 
-            Utilisateurs
+            Séances
             </a>
         </li>
     </ul>

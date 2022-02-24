@@ -21,9 +21,12 @@
         {% endblock %}
     </head>
     <body>
-        <h1 id="titre">Gestion Cinéma</h1>
-        {% include 'navBar.html.twig' %}
-        
-        {% block body %}{% endblock %}
+        <div class="bloc_gauche">
+            <h1 id="titre">Gestion Cinéma</h1>
+            {% include 'navBar.html.twig' %}
+        </div>
+        <div class="bloc_droit">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

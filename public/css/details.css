@@ -1,0 +1,26 @@
+body{
+    color: #3d3d3d;
+}
+
+h2{
+    font-weight: 600;
+}
+
+p{
+    font-size: 20px;
+}
+.bloc_film{
+    display: flex;
+}
+
+.image_film{
+    max-width: 310px;
+    max-height: 420px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+}
+
+.titre_film{
+    margin-bottom: 30px;
+    font-weight: bold;
+}

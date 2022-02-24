@@ -3,70 +3,66 @@
 namespace App\Controller;
 
 use App\Entity\Film;
+use App\Form\FilmType;
+use App\Service\FileUploader;
 use Doctrine\Persistence\ManagerRegistry;
-use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FilmController extends AbstractController
 {
+
+    //CREATION ET MISES A JOUR DES FILMS 
     #[Route('/create', name: 'create')]
     #[Route('/update/{id?1}', name: 'update')]
-    public function createFilm(ManagerRegistry $doctrine, HttpFoundationRequest $request, $id = null): Response
+    public function film(Film $film = null, ManagerRegistry $doctrine, HttpFoundationRequest $request, FileUploader $fileUploader): Response
     {
         $entityManager = $doctrine->getManager();
-        $isEditor= false;
 
-        if(isset($id))
-        {
-            $films = $entityManager->getRepository(Film::class)->find($id);
-            if(!isset($films))
-            {
-                return $this->redirectToRoute('listing');
-            }
-            $isEditor= true;
-        } else {
-            $films = new Film;
+        if (!$film){
+            $film = new Film;
         }
-        
-        $form = $this->createFormBuilder($films)
-            ->add("title", TextType::class)
-            ->add("realisateur", TextType::class)
-            ->add("genre", TextType::class)
-            ->add("date", TextType::class)
-            ->add("image", null, ['required' => false], TextType::class)
-            ->add("save", SubmitType::class)
-            ->getForm();
-
+        $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid())
         {
-            $films = $form->getData();
-            $entityManager->persist($films);
+            if(!$film->getId()){
+                $film->setCreatedAt(new \DateTimeImmutable("now"));
+            }
+            $film->setUpdatedAt(new \DateTime("now"));
+
+            $imageFile = $form->get('image')->getData();
+            if($imageFile){
+                $imageFileName = $fileUploader->upload($imageFile);
+                $film->setImage($imageFileName);
+            }
+            $film = $form->getData();
+            $entityManager->persist($film);
             $entityManager->flush();
+
+            return $this->redirectToRoute('listing');
         }
 
         return $this->render('film/create.html.twig', [
             'form' => $form->createView(),
-            'isEditor' => $isEditor
+            'isEditor' => $film->getId()
         ]);
     }
 
+    //LISTING DES FILMS 
     #[Route('/listing', name:'listing')]
     public function listing(ManagerRegistry $doctrine)
     {
         $films = $doctrine->getManager()->getRepository(Film::class)->findAll();   
 
        return $this->render('film/listing.html.twig', [
-           'films' => $films,
+           'films' => $films
          ]);
     }
 
+    //SUPPRESSION DE FILM
     #[Route('/delete/{id}', name:'delete')]
     public function delete(ManagerRegistry $doctrine, $id)
     {
@@ -81,6 +77,7 @@ class FilmController extends AbstractController
         return $this->redirectToRoute('listing');
     }
 
+    //AFFICHAGE DES DETAILS DE CHAQUE FILMS
     #[Route('/details/{id}', name:'details')]
     public function details(ManagerRegistry $doctrine, $id)
     {
@@ -91,9 +88,5 @@ class FilmController extends AbstractController
         return $this->render('film/details.html.twig', [
             'film' => $film
         ]);
-
-
-
-
     }
 }

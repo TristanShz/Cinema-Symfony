@@ -1,10 +1,45 @@
 {% extends "base.html.twig" %}
 
 {% block title %} 
-    Page de film  
+    Page du film {{ film.title }}
+{% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/details.css') }}" />
+
 {% endblock %}
 
 {% block body %}
 
-    <h2> {{ film.title }} </h2>
+    <h1 class="titre_film"> {{ film.title }} </h1>
+
+    <div class="bloc_film">
+        <div class="image_film">
+            <img src="{{ asset("images_directory/#{film.image}") }}">
+        </div>
+
+        <div class="details_film">
+            <h2>Réalisateur : </h2>
+            <p class="text_details">{{ film.realisateur }}</p>
+
+            <h2>Genre : </h2>
+            <p class="text_details">{{ film.genre }}</p>
+
+            <h2>Date de parution : </h2>
+            <p class="text_details">{{ film.date|date('d-m-Y') }}</p>
+
+            <h2>Durée : </h2>
+            <p class="text_details">{{ film.duree }} minutes</p>
+
+        </div>
+
+        
+    </div>
+        <div class="synopsys">
+            <h2>Synopsis : </h2>
+            <p>{{ film.synopsis }}</p>
+        </div>
+
+    
 {% endblock %}

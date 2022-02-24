@@ -15,7 +15,7 @@
         <div>
             <h2 class="titre_tableau">Gestion des films</h2>
         </div>
-        <div>
+        <div class="div_tableau">
         <table class="table">
             <thead>
                 <tr>
@@ -24,6 +24,8 @@
                     <th scope="col">Réalisateur</th>
                     <th scope="col">Genre</th>
                     <th scope="col">Date de parution</th>
+                    <th scope="col">Durée</th>
+                    <th scope="col">Statut</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -34,11 +36,13 @@
             <tbody>
                 {% for film in films %}
                     <tr>
-                        <th scope="row"> {{ film.id }} </th>
+                        <th scope="row"> {{ loop.index }} </th>
                         <td> {{ film.title }} </td>
                         <td> {{ film.realisateur }} </td>
                         <td> {{ film.genre }} </td>
-                        <td> {{ film.date }} </td>
+                        <td> {{ film.date|date('d-m-Y') }} </td>
+                        <td> {{ film.duree }}min </td>
+                        <td> {{ film.status }} </td>
                         <td class="details"><a href="{{ path('details', { 'id':film.id } )}}">détails</a></td>
                         <td class="modifier"><a href="{{ path('update', { 'id':film.id } )}}">modifier</a></td>
                         <td class="supprimer"><a href="{{ path('delete', { 'id':film.id } )}}">supprimer</a></td>
