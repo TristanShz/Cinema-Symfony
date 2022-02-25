@@ -4,23 +4,25 @@ namespace App\Controller;
 
 use App\Entity\Film;
 use App\Form\FilmType;
+use App\Repository\FilmRepository;
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/film')]
 class FilmController extends AbstractController
 {
 
     //CREATION ET MISES A JOUR DES FILMS 
-    #[Route('/create', name: 'create')]
-    #[Route('/update/{id?1}', name: 'update')]
-    public function film(Film $film = null, ManagerRegistry $doctrine, HttpFoundationRequest $request, FileUploader $fileUploader): Response
+    #[Route('/create', name: 'create_film')]
+    #[Route('/update/{id?1}', name: 'update_film')]
+    public function film(Film $film = null, EntityManagerInterface $entityManager, Request $request, FileUploader $fileUploader): Response
     {
-        $entityManager = $doctrine->getManager();
-
+        // $entityManager = $doctrine->getManager();
         if (!$film){
             $film = new Film;
         }
@@ -42,28 +44,27 @@ class FilmController extends AbstractController
             $entityManager->persist($film);
             $entityManager->flush();
 
-            return $this->redirectToRoute('listing');
+            return $this->redirectToRoute('listing_film');
         }
 
         return $this->render('film/create.html.twig', [
+            'film' => $film,
             'form' => $form->createView(),
             'isEditor' => $film->getId()
         ]);
     }
 
     //LISTING DES FILMS 
-    #[Route('/listing', name:'listing')]
-    public function listing(ManagerRegistry $doctrine)
+    #[Route('/listing', name:'listing_film')]
+    public function listing(FilmRepository $filmRepository)
     {
-        $films = $doctrine->getManager()->getRepository(Film::class)->findAll();   
-
        return $this->render('film/listing.html.twig', [
-           'films' => $films
+           'films' => $filmRepository->findAll()
          ]);
     }
 
     //SUPPRESSION DE FILM
-    #[Route('/delete/{id}', name:'delete')]
+    #[Route('/delete/{id}', name:'delete_film')]
     public function delete(ManagerRegistry $doctrine, $id)
     {
         $entityManager = $doctrine->getManager();

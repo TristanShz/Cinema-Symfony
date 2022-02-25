@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seance index{% endblock %}
+
+{% block body %}
+    <div class="body_tableau">
+
+        <div class="ajouter">
+            <a href={{ path('create_seance') }}> <button type="button" class="btn btn-primary" >Ajouter une séance</button></a>
+        </div>
+
+        <div>
+            <h2 class="titre_tableau">Gestion des séances</h2>
+        </div>
+
+        <div class="div_tableau">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date de début</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">Film diffusé</th>
+                        <th scope="col">Salle</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                {% for seance in seances %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ seance.dateDebut ? seance.dateDebut|date('d-m-Y H:i') : '' }}</td>
+                        <td>{{ seance.lang }}</td>
+                        <td>{{ seance.film.title }}</td>
+                        <td>{{ seance.salles.numSalles }}</td>
+                        <td class="modifier"><a href="{{ path('update_seance', {'id': seance.id}) }}">Modifier</a></td>
+                        <td class="supprimer"><a href="{{ path('seance_delete', {'id': seance.id}) }}">Supprimer</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucune séance actuellement</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

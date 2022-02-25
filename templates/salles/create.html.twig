@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %} 
+    {% if (isEditor) %}
+        Modification de salle
+    {% else %}
+       Ajout de salle
+    {% endif %}    
+{% endblock %}
+
+{% block body %}
+
+    {% if (isEditor) %}
+        <h1 class="titre_form">Modifier la salle</h1 >
+    {% else %}
+        <h1 class"titre_form">Ajouter une salle</h1 >
+    {% endif %}
+
+    <div class="form_film">
+        {{ form_start(form) }}
+
+        {{ form_row(form.num_salles, {'label': 'Numéro de la salle : '})}}
+
+        {{ form_row(form.etat, {'label': 'Etat : '})}}
+
+        <div class="add_or_return">
+            {% if (isEditor) %}
+                {{ form_row(form.save, {'label': 'Editer la salle'})}}
+            
+            {% else %}
+
+            {{ form_row(form.save, {'label': 'Ajouter la salle'})}}
+            
+            {% endif %}
+            {{ form_end(form) }}
+            <a class="retour" href="{{ path('listing_salle') }}">Retour</a>
+        </div>
+    </div>
+
+    
+
+{% endblock %}

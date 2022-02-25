@@ -2,19 +2,19 @@ body {
   background: #e3e7ed !important;
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
     sans-serif;
-  padding-right: 40px;
 
   display: flex;
 }
 
 .bloc_gauche {
-  width: 20%;
-  margin-right: 40px;
+  width: 15%;
+  margin-right: 5%;
 }
 
 .bloc_droit {
   width: 100%;
-  margin-top: 200px;
+  margin-top: 100px;
+  margin-right: 80px;
 }
 
 .titre_tableau {
@@ -24,8 +24,10 @@ body {
 .div_tableau {
   background: white;
   padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.body_film {
+.body_tableau {
   display: flex;
   flex-direction: column;
 }
@@ -33,17 +35,32 @@ body {
 #titre {
   font-size: 48px;
   font-weight: bold;
-  width: 100%;
   margin-top: 10px;
+  margin-left: 20px;
   margin-bottom: 60px;
-  position: absolute;
+}
+
+.titre_form {
+  margin-bottom: 25px;
 }
 
 .form_film {
   display: flex;
   flex-direction: column;
+  border: solid 1px black;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 40px;
 }
 
+.add_or_return{
+  display:flex;
+}
+
+.retour{
+  margin-left: 20px;
+  margin-top: 5px;
+}
 .ajouter {
   display: flex;
   justify-content: flex-end;
@@ -52,23 +69,12 @@ body {
 .ajouter button {
   width: auto;
   height: 60px;
-  color: white;
   font-size: 32px;
   font-weight: 600;
   padding: 0 12px;
   padding-bottom: 5px;
-
-  background: #5d5fef;
-  border: 1px solid #000000;
-  box-sizing: border-box;
-  border-radius: 10px;
-
   margin: 20px;
   align-self: center;
-}
-
-.ajouter button:hover {
-  background-color: #4f51cc;
 }
 
 td a {

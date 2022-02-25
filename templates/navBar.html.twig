@@ -21,7 +21,7 @@
         </li>
 
         <li>
-            <a class="nav-link" href="{{ path('listing') }}">
+            <a class="nav-link" href="{{ path('listing_film') }}">
             
             <span id="icon">
                 <i class="fa-solid fa-clapperboard"></i>
@@ -32,13 +32,24 @@
         </li>
 
         <li>
-            <a class="nav-link" href="{{ path('seance_index') }}">
+            <a class="nav-link" href="{{ path('listing_seance') }}">
+            
+            <span id="icon">
+                <i class="fa-solid fa-ticket"></i>
+            </span>
+
+            Séances
+            </a>
+        </li>
+
+        <li>
+            <a class="nav-link" href="{{ path('listing_salle') }}">
             
             <span id="icon">
                 <i class="fa-solid fa-masks-theater"></i>
             </span>
 
-            Séances
+            Salles
             </a>
         </li>
     </ul>

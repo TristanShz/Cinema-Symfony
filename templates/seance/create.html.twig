@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} 
+    {% if (isEditor) %}
+        Edition de séance
+    {% else %}
+       Ajout de séance 
+    {% endif %}    
+{% endblock %}
+
+{% block body %}
+
+    {% if (isEditor) %}
+        <h1 class="titre_form">Edition de séance</h1>
+    {% else %}
+        <h1 class"titre_form">Ajout de séance</h1>
+    {% endif %}
+    {{ form_start(form) }}
+    {{ form_row(form.dateDebut) }}
+    {{ form_row(form.lang) }}
+    {{ form_row(form.film) }}
+    {{ form_row(form.salles) }}
+
+    <div class="add_or_return">
+        {% if (isEditor) %}
+
+            {{ form_row(form.save, {'label': 'Editer la séance'})}}
+            
+        {% else %}
+
+            {{ form_row(form.save, {'label': 'Ajouter la séance'})}}
+            
+        {% endif %}
+        {{ form_end(form) }}
+        <a class="retour" href="{{ path('listing_seance') }}">Retour</a>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

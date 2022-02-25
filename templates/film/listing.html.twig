@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="body_film">
+    <div class="body_tableau">
         <div class="ajouter">
-            <a href={{ path('create') }}> <button type="button" >Ajouter un film</button></a>
+            <a href={{ path('create_film') }}> <button type="button" class="btn btn-primary" >Ajouter un film</button></a>
         </div>
 
         <div>
@@ -44,8 +44,8 @@
                         <td> {{ film.duree }}min </td>
                         <td> {{ film.status }} </td>
                         <td class="details"><a href="{{ path('details', { 'id':film.id } )}}">détails</a></td>
-                        <td class="modifier"><a href="{{ path('update', { 'id':film.id } )}}">modifier</a></td>
-                        <td class="supprimer"><a href="{{ path('delete', { 'id':film.id } )}}">supprimer</a></td>
+                        <td class="modifier"><a href="{{ path('update_film', { 'id':film.id } )}}">modifier</a></td>
+                        <td class="supprimer"><a href="{{ path('delete_film', { 'id':film.id } )}}">supprimer</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

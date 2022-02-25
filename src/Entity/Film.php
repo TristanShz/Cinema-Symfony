@@ -55,6 +55,9 @@ class Film
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $bandeAnnonce;
+
     public function __construct()
     {
         $this->seances = new ArrayCollection();
@@ -210,6 +213,18 @@ class Film
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getBandeAnnonce(): ?string
+    {
+        return $this->bandeAnnonce;
+    }
+
+    public function setBandeAnnonce(?string $bandeAnnonce): self
+    {
+        $this->bandeAnnonce = $bandeAnnonce;
 
         return $this;
     }

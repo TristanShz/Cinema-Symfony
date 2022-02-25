@@ -3,12 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Film;
-use DateTime;
-use Doctrine\DBAL\Types\DateType as TypesDateType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\ChoiceList\Factory\Cache\ChoiceLabel;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -50,7 +46,9 @@ class FilmType extends AbstractType
                     ],
                     'mimeTypesMessage' => 'Veuillez upload une image de type JPEG ou PNG'
                     ])
-                ]   
+                
+                ],   
+                'data_class' => null,
             ])
             ->add('save', SubmitType::class)
         ;

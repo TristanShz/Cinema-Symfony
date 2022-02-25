@@ -29,6 +29,9 @@ class Seance
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\ManyToOne(targetEntity: Salles::class, inversedBy: 'seance')]
+    private $salles;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Seance
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSalles(): ?Salles
+    {
+        return $this->salles;
+    }
+
+    public function setSalles(?Salles $salles): self
+    {
+        $this->salles = $salles;
 
         return $this;
     }

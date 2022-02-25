@@ -12,11 +12,11 @@
                 <td>{{ seance.id }}</td>
             </tr>
             <tr>
-                <th>DateDebut</th>
+                <th>Date et Heure de début</th>
                 <td>{{ seance.dateDebut ? seance.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Lang</th>
+                <th>Version</th>
                 <td>{{ seance.lang }}</td>
             </tr>
             {# <tr>
@@ -32,7 +32,6 @@
 
     <a href="{{ path('seance_index') }}">back to list</a>
 
-    <a href="{{ path('seance_edit', {'id': seance.id}) }}">edit</a>
+    <a href="{{ path('create', {'id': seance.id}) }}">edit</a>
 
-    {{ include('seance/_delete_form.html.twig') }}
 {% endblock %}

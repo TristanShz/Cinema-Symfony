@@ -11,9 +11,9 @@
 {% block body %}
 
     {% if (isEditor) %}
-        <h2>Edition de film</h2>
+        <h1 class="titre_form">Edition de film</h1 >
     {% else %}
-        <h2>Ajout de films</h2>
+        <h1 class"titre_form">Ajout de films</h1 >
     {% endif %}
 
     <div class="form_film">
@@ -34,16 +34,20 @@
         {{ form_row(form.synopsis, {'label': 'Synopsis : '})}}
 
         {{ form_row(form.image, {'label': 'Image (optionnel) : '})}}
+        <div class="add_or_return">
+            {% if (isEditor) %}
+                {{ form_row(form.save, {'label': 'Editer le film'})}}
+            
+            {% else %}
 
-        {% if (isEditor) %}
-            {{ form_row(form.save, {'label': 'Editer le film'})}}
-        
-        {% else %}
-
-        {{ form_row(form.save, {'label': 'Ajouter le film'})}}
-        
-        {% endif %}
-        {{ form_end(form) }}
+            {{ form_row(form.save, {'label': 'Ajouter le film'})}}
+            
+            {% endif %}
+            {{ form_end(form) }}
+            <a class="retour" href="{{ path('listing_film') }}">Retour</a>
+        </div>
     </div>
+
+    
 
 {% endblock %}

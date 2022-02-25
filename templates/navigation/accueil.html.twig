@@ -2,7 +2,65 @@
 
 {% block title %} Accueil {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/accueil.css') }}" />
+{% endblock %}
+
 {% block body %}
-    <div>Bienvenue sur l'accueil</div>
-    <div>Venez découvrir tout nos films</div>
+    <h1 class="fw-bold fs-1">Bienvenue sur le site de MegaCiné</h1>
+
+    <p class="fs-4">Découvrez la liste de nos films ainsi que les séances à venir</p>
+
+    <div class="bloc_principal">
+        {% for film in films %}
+        <div class="film_seance">
+            <div class="petit_bloc_film">
+                <div class="acc_image_film">
+                    <img src="{{ asset("images_directory/#{film.image}") }}">
+                </div>
+
+                <div class="acc_details_film">
+                    <a class="meta-body-title" href="{{ path('details', { 'id':film.id } )}}"><h2 class="fs-2 fw-bold">{{ film.title }}</h2></a>
+
+                    <div class="meta-body-detail">
+                        <span>{{ film.duree }} minutes / {{ film.genre }}</span>
+                    </div>
+                    <div class="meta-body-item">
+                        <span class="text-secondary">Date de diffusion</span>
+                        <span> {{ film.date|date('d-m-Y') }}</span>
+                    </div>
+
+                    <div class="meta-body-item">
+                        <span class="text-secondary">De</span>
+                        <span> {{ film.realisateur }}</span>
+                    </div>
+                    <div class="meta-body-synopsis">
+                        {{ film.synopsis }}
+                    </div>
+                    <div>
+                        <a href="{{ path('details', { 'id':film.id } )}}"> voir la suite...</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bloc_seance">
+                <h2 class="fw-bold fs-2">Prochaines séances</h1>
+                <ul class="">
+                    {% for seance in seances %}
+                            
+                        {% if (film.id == seance.film.id) %}
+                            <li class="">
+                                <span>{{ seance.dateDebut|date('d-m-Y H:i') }}</span>
+                                <span class="numsalle"><i class="fa-solid fa-arrow-right"></i> Salle {{ seance.salles.numSalles }}</span>
+                            </li>    
+                        {% endif %}                           
+                    {% endfor %}
+                </ul>
+            </div>
+            </div>
+            {% endfor %}
+        
+    </div>
+
+    
 {% endblock %}

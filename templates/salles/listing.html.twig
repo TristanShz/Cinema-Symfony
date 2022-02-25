@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des salles{% endblock %}
+
+{% block body %}
+    <div class="body_tableau">
+
+        <div class="ajouter">
+            <a href={{ path('create_salle') }}> <button type="button" class="btn btn-primary" >Ajouter une salle</button></a>
+        </div>
+
+        <div>
+            <h2 class="titre_tableau">Gestion des salles</h2>
+        </div>
+
+        <div class="div_tableau">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Numéro de salle</th>
+                        <th scope="col">Disponible</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for salle in salles %}
+                    <tr>
+                        <td>{{ salle.numSalles }}</td>
+                        <td>{{ salle.etat ? 'Oui' : 'Non' }}</td>
+                        <td class="modifier"><a href="{{ path('update_salle', { 'id':salle.id } )}}">modifier</a></td>
+                        <td class="supprimer"><a href="{{ path('salle_delete', {'id': salle.id}) }}">Supprimer</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Aucune salle actuellement</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

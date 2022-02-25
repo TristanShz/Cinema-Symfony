@@ -6,6 +6,7 @@ use App\Entity\Seance;
 use App\Form\SeanceType;
 use App\Repository\SeanceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,16 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/seance')]
 class SeanceController extends AbstractController
 {
-    #[Route('/', name: 'seance_index', methods: ['GET'])]
+    #[Route('/', name: 'listing_seance', methods: ['GET'])]
     public function index(SeanceRepository $seanceRepository): Response
     {
-        return $this->render('seance/index.html.twig', [
+        return $this->render('seance/listing.html.twig', [
             'seances' => $seanceRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'seance_new', methods: ['GET', 'POST'])]
-    #[Route('/update/{id?1}', name: 'update')]
+    #[Route('/create', name: 'create_seance')]
+    #[Route('/update/{id?1}', name: 'update_seance')]
     public function new(Seance $seance= null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$seance){
@@ -41,15 +42,17 @@ class SeanceController extends AbstractController
 
             $seance->setUpdatedAt(new \DateTime('now'));
 
+            $seance = $form->getData();
             $entityManager->persist($seance);
             $entityManager->flush();
 
-            return $this->redirectToRoute('seance_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('listing_seance', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('seance/new.html.twig', [
+        return $this->renderForm('seance/create.html.twig', [
             'seance' => $seance,
             'form' => $form,
+            'isEditor' => $seance->getId()
         ]);
     }
 
@@ -61,32 +64,17 @@ class SeanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'seance_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Seance $seance, EntityManagerInterface $entityManager): Response
+    #[Route('/delete/{id}', name: 'seance_delete',)]
+    public function delete(ManagerRegistry $doctrine, $id)
     {
-        $form = $this->createForm(SeanceType::class, $seance);
-        $form->handleRequest($request);
+        $entityManager = $doctrine->getManager();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+        $seance = $entityManager->getRepository(Seance::class)->find($id);
 
-            return $this->redirectToRoute('seance_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('seance/edit.html.twig', [
-            'seance' => $seance,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'seance_delete', methods: ['POST'])]
-    public function delete(Request $request, Seance $seance, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$seance->getId(), $request->request->get('_token'))) {
+        if(isset($seance)) {
             $entityManager->remove($seance);
             $entityManager->flush();
         }
-
-        return $this->redirectToRoute('seance_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('seance_index');
     }
 }
