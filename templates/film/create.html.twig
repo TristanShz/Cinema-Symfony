@@ -33,6 +33,8 @@
 
         {{ form_row(form.synopsis, {'label': 'Synopsis : '})}}
 
+        {{ form_row(form.bandeAnnonce, {'label': 'Bande annonce (lien youtube https://www.youtube.com/watch?v=...) : '})}}
+
         {{ form_row(form.image, {'label': 'Image (optionnel) : '})}}
         <div class="add_or_return">
             {% if (isEditor) %}

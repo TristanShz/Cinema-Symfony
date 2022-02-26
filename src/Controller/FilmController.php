@@ -22,7 +22,6 @@ class FilmController extends AbstractController
     #[Route('/update/{id?1}', name: 'update_film')]
     public function film(Film $film = null, EntityManagerInterface $entityManager, Request $request, FileUploader $fileUploader): Response
     {
-        // $entityManager = $doctrine->getManager();
         if (!$film){
             $film = new Film;
         }
@@ -35,11 +34,23 @@ class FilmController extends AbstractController
             }
             $film->setUpdatedAt(new \DateTime("now"));
 
+            //Gere l'upload de l'image 
             $imageFile = $form->get('image')->getData();
+
             if($imageFile){
                 $imageFileName = $fileUploader->upload($imageFile);
                 $film->setImage($imageFileName);
             }
+
+            //Code permmetant de transformer l'url youtube basique en url youtube.com/embed/.... 
+            $url_ba= $form->get('bandeAnnonce')->getData();
+
+            if(strlen($url_ba)> 41){
+            $id_url= substr($url_ba, 32,43);
+            $url_conform= "https://www.youtube.com/embed/".$id_url;
+            $film->setBandeAnnonce($url_conform);
+            }
+
             $film = $form->getData();
             $entityManager->persist($film);
             $entityManager->flush();

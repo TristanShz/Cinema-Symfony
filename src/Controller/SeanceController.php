@@ -45,10 +45,8 @@ class SeanceController extends AbstractController
             $seance = $form->getData();
             $entityManager->persist($seance);
             $entityManager->flush();
-
             return $this->redirectToRoute('listing_seance', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('seance/create.html.twig', [
             'seance' => $seance,
             'form' => $form,

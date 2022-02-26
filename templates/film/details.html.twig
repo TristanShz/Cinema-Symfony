@@ -10,8 +10,9 @@
 
 {% endblock %}
 
-{% block body %}
 
+
+{% block body %}
     <h1 class="titre_film"> {{ film.title }} </h1>
 
     <div class="bloc_film">
@@ -36,10 +37,22 @@
 
         
     </div>
-        <div class="synopsys">
-            <h2>Synopsis : </h2>
-            <p>{{ film.synopsis }}</p>
-        </div>
+    
+    <div class="synopsys">
+        <h2>Synopsis : </h2>
+        <p>{{ film.synopsis }}</p>
+    </div>
+
+    {% if (film.bandeAnnonce) %}
+    <div class="bande_annonce">
+        <h2>Bande Annonce :</h2>
+        <iframe id="ytplayer" type="text/html" width="1120" height="630"
+        src="{{ film.bandeAnnonce }}"
+        frameborder="0" allowfullscreen>
+    </div>
+    {% endif %}
+
+    
 
     
 {% endblock %}
